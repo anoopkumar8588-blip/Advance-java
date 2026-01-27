@@ -1,6 +1,3 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: api-gateway
@@ -13,25 +10,17 @@ spring:
           lower-case-service-id: true
 
       routes:
-
-
         - id: order-service
           uri: lb://order-service
           predicates:
             - Path=/order/**
-  
-
-
-
+          filters:
+            - RewritePath=/order/(?<segment>.*), /orders/${segment}
 
         - id: product-service
           uri: lb://product-service
           predicates:
             - Path=/product/**
-
-
-      
-
 
 eureka:
   client:
